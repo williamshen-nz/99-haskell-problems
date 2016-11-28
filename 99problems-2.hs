@@ -61,12 +61,12 @@ repli' xs n = foldl (\acc e -> acc ++ repli' e n) [] xs
 -- Problem 16 - Drop every N'th element from a list
 dropEvery :: [a] -> Int -> [a]
 dropEvery [] _ = []
-dropEvery list n = helper n list []
+dropEvery list n = helper n list
     where
-        helper _ [] acc = reverse acc
-        helper num (x:xs) acc
-            | num == 1 = helper n xs acc
-            | otherwise = helper (num-1) xs (x:acc)
+        helper _ [] = []
+        helper num (x:xs)
+            | num == 1 = helper n xs
+            | otherwise = x : helper (num-1) xs
             
 dropEvery' :: [a] -> Int -> [a]
 dropEvery' xs n = map fst $ filter (\(x,i) -> i `mod` n /= 0) $ zip xs [1..]
